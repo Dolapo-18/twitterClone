@@ -3,6 +3,7 @@ const app = express();
 const PORT = 5001;
 
 const bodyParser = require("body-parser");
+const session = require('express-session')
 
 const middleware = require("./middleware")
 const path = require("path")
@@ -19,6 +20,12 @@ app.use(express.static(path.join(__dirname, "public")));
 //parse body params
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(session({
+    secret: "session secret",
+    resave: true,
+    saveUninitialized: false
+}))
+
 
 //Routes
 const loginRoutes = require("./routes/loginRoutes")
@@ -28,8 +35,10 @@ app.use("/register", registerRoutes);
 
 app.get("/", middleware.requireLogin, (req, res, next) => {
     const payload = {
-        pageTitle: "Home"
+        pageTitle: "Home",
+        userLoggedIn: req.session.user
     }
+    
     res.status(200).render("home", payload);
 })
 
