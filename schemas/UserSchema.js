@@ -8,7 +8,7 @@ const UserSchema = new Schema({
     username: { type: String, unique: true, required: true, trim: true },
     email: { type: String, unique: true, required: true, trim: true },
     password: { type: String, required: true },
-    profielPic: { type: String, default: "/images/profile.png"}
+    profilePic: { type: String, default: "/images/profilePic.jpeg"}
 },
     {timestamps: true}
 );
